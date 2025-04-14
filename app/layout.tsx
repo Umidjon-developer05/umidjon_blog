@@ -37,7 +37,8 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://umidjon.site",
     locale: "en_EN",
-    images: "https://media.graphassets.com/kXL006lyRnW46IKTHdHs",
+    images:
+      "https://0evi7lr5v8.ufs.sh/f/LN78d9BJu8QkU2FhAc05evHGXpqZ4SA9ilT8VdO3PBtIKJxk",
     countryName: "Uzbekistan",
     siteName: "umidjon",
     emails: "info@umidjon.site",
