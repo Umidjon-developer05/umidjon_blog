@@ -42,3 +42,10 @@
 ```bash
 git clone https://github.com/your-username/umidjon-blog.git
 cd umidjon-blog
+npm i && yarn install
+.env
+NEXT_PUBLIC_GRAPHCMS_ENDPOINT =
+NEXT_PUBLIC_TETELGRAM_BOT_API =
+NEXT_PUBLIC_TETELGRAM_CHAT_ID =
+start project
+npm run dev
