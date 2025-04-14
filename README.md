@@ -40,7 +40,7 @@
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/umidjon-blog.git
+git clone https://github.com/Umidjon-developer05/umidjon_blog
 cd umidjon-blog
 npm i && yarn install
 .env
