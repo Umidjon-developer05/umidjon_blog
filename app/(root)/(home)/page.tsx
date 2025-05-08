@@ -18,9 +18,13 @@ async function HomePage() {
       </h2>
 
       <div className="flex flex-col space-y-24 mt-24">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.title} {...blog} />
-        ))}
+       {blogs?.length === 0 ? (
+  <p className="text-center">No blog posts available.</p>
+) : (
+  blogs
+    .filter((blog) => blog && blog.slug)
+    .map((blog) => <BlogCard key={blog.title} {...blog} />)
+)}
       </div>
     </div>
   );
