@@ -18,7 +18,7 @@ function BlogCard(blog: Props) {
         blog.isVertical ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"
       )}
     >
-      <Link href={`/blogs/${blog.slug}`}>
+      <Link href={`/blogs/${blog?.slug}`}>
         <div className="relative bg-secondary rounded-md">
           <Image
             width={650}
@@ -30,7 +30,7 @@ function BlogCard(blog: Props) {
         </div>
       </Link>
       <div className="flex flex-col space-y-4">
-        <Link href={`/blogs/${blog.slug}`} className="flex flex-col space-y-4">
+        <Link href={`/blogs/${blog?.slug}`} className="flex flex-col space-y-4">
           {/* Time info */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -67,13 +67,13 @@ function BlogCard(blog: Props) {
           </div>
           <Dot />
           <div className="flex items-center gap-2">
-            <Link href={`/tags/${blog.tag.slug}`}>
+            <Link href={`/tags/${blog?.tag?.slug}`}>
               <Badge variant={"secondary"} role="button">
                 <Tag className="w-3 h-3 me-2" />
-                {blog.tag.name}
+                {blog?.tag?.name}
               </Badge>
             </Link>
-            <Link href={`/categories/${blog.category.slug}`}>
+            <Link href={`/categories/${blog?.category?.slug}`}>
               <Badge variant={"outline"} role="button">
                 <Layers2 className="w-3 h-3 me-2" />
                 {blog.category.name}

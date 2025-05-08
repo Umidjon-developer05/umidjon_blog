@@ -7,7 +7,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!
 export const getBlogs = async () => {
 	const query = gql`
 		query MyQuery {
-			blogs(where: { archive: false }) {
+			blogs(where: { archive: false }, first: 101) {
 				title
 				createdAt
 				author {
@@ -37,6 +37,7 @@ export const getBlogs = async () => {
 	`
 
 	const { blogs } = await request<{ blogs: IBlog[] }>(graphqlAPI, query)
+	console.log('blogs', blogs)
 	return blogs
 }
 
