@@ -7,6 +7,7 @@ import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
 import { AuthProvider } from '@/components/auth-provider'
 
+
 const creteRound = Crete_Round({
 	weight: ['400'],
 	subsets: ['latin'],
