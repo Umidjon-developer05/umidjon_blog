@@ -18,8 +18,6 @@ const workSans = Work_Sans({
 	variable: '--font-workSans',
 })
 
-
-
 export const metadata: Metadata = {
 	metadataBase: new URL('https://umidjon.site'),
 	title: 'Umidjon dasturlashga oid maqolalar',
@@ -47,7 +45,6 @@ export const metadata: Metadata = {
 		emails: 'info@umidjon.site',
 	},
 }
-
 
 function RootLayout({ children }: ChildProps) {
 	return (
