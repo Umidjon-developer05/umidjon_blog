@@ -1,12 +1,15 @@
-import { ChildProps } from '@/types'
-import React from 'react'
+import type { ChildProps } from '@/types'
 import Navbar from './_components/navbar'
 import Footer from './_components/footer'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth/auth'
 
-function Layout({ children }: ChildProps) {
+async function Layout({ children }: ChildProps) {
+	const session = await getServerSession(authOptions)
+
 	return (
 		<div>
-			<Navbar />
+			{<Navbar session={session ?? { user: { id: '' } }} />}
 			<div className='container'>{children}</div>
 			<Footer />
 		</div>
