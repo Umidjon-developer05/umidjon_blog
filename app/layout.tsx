@@ -18,6 +18,7 @@ const workSans = Work_Sans({
 	variable: '--font-workSans',
 })
 
+
 export const metadata: Metadata = {
 	metadataBase: new URL('https://umidjon.site'),
 	title: 'Umidjon dasturlashga oid maqolalar',
