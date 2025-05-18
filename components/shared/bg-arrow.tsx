@@ -1,7 +1,7 @@
 const BgArrow = () => {
 	return (
 		<svg
-			className='wave'
+			className='wave sm:block hidden'
 			width='650'
 			viewBox='0 0 484 120'
 			fill='none'
