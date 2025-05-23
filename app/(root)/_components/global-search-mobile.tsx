@@ -41,7 +41,7 @@ function GlobalSearchMobile() {
 
 	return (
 		<Drawer>
-			<DrawerTrigger>
+			<DrawerTrigger className="sm:hidden block">
 				<Button size={'icon'} variant={'outline'} className='p-3'>
 					<div className='hover:bg-blue-400/20 cursor-pointer rounded-sm transition-colors flex items-center gap-1 px-3 py-2'>
 						<span className='hidden md:flex'>Search</span>
