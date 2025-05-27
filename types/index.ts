@@ -1,3 +1,5 @@
+import { Dictionary } from '@/lib/dictionaries'
+
 export interface ChildProps {
 	children: React.ReactNode
 }
@@ -31,4 +33,46 @@ export interface ICategoryAndTags {
 	name: string
 	slug: string
 	blogs: IBlog[]
+}
+
+export interface LoginProps {
+	dictionary: {
+		login: {
+			login: string
+			title: string
+			subtitle: string
+		}
+	}
+}
+
+export interface NavbarProps {
+	session: {
+		user: {
+			id: string
+			name?: string | null
+			email?: string | null
+			image?: string | null
+		}
+	}
+	lang: 'en' | 'uz'
+	dictionary: Dictionary
+}
+
+export interface UserProfileProps {
+	user: {
+		name?: string | null
+		email?: string | null
+		image?: string | null
+	}
+}
+
+export interface LanguageSwitcherProps {
+	currentLang: 'en' | 'uz'
+	dictionary: {
+		languages: {
+			switchLanguage: string
+			english: string
+			uzbek: string
+		}
+	}
 }

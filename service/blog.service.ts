@@ -4,11 +4,10 @@ import { cache } from 'react'
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!
 
-
-export const getBlogs = async () => {
+export const getBlogs = async (locale = 'en') => {
 	const query = gql`
 		query MyQuery {
-			blogs(where: { archive: false }, first: 103) {
+			blogs(where: { archive: false }, first: 209, locales: [${locale}]) {
 				title
 				createdAt
 				author {
@@ -38,45 +37,51 @@ export const getBlogs = async () => {
 	`
 
 	const { blogs } = await request<{ blogs: IBlog[] }>(graphqlAPI, query)
-	return blogs
+	return blogs ?? []
 }
-
-export const getDetailedBlog = cache(async (slug: string) => {
-	const query = gql`
-		query MyQuery($slug: String!) {
-			blog(where: { slug: $slug }) {
-				author {
-					name
+export const getDetailedBlog = cache(
+	async (slug: string, locale: string = 'uz') => {
+		const query = gql`
+			query MyQuery($slug: String!, $locale: [Locale!]!) {
+				blogs(where: { slug: $slug }, locales: $locale) {
+					author {
+						name
+						image {
+							url
+						}
+						bio
+						id
+					}
+					content {
+						html
+					}
+					createdAt
 					image {
 						url
 					}
-					bio
-					id
-				}
-				content {
-					html
-				}
-				createdAt
-				image {
-					url
-				}
-				slug
-				tag {
-					name
 					slug
+					tag {
+						name
+						slug
+					}
+					category {
+						name
+						slug
+					}
+					title
 				}
-				category {
-					name
-					slug
-				}
-				title
 			}
-		}
-	`
+		`
 
-	const { blog } = await request<{ blog: IBlog }>(graphqlAPI, query, { slug })
-	return blog
-})
+		const { blogs } = await request<{ blogs: IBlog[] }>(graphqlAPI, query, {
+			slug,
+			locale: [locale],
+		})
+
+		// Agar faqat bitta blog qaytishini kutayotgan bo‘lsangiz:
+		return blogs?.[0] ?? null
+	}
+)
 
 export const getSearchBlogs = async (title: string) => {
 	const query = gql`

@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "ap-south-1.graphassets.com",
-      },
-    ],
-  },
-};
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'ap-south-1.graphassets.com',
+			},
+		],
+	},
+}
 
-export default nextConfig;
+export default nextConfig

@@ -1,0 +1,22 @@
+{
+	"languages": {
+		"switchLanguage": "Switch Language",
+		"english": "English",
+		"uzbek": "Uzbek"
+	},
+	"main": {
+		"title": "Taking control of your daily life is easy when you know how!"
+	},
+	"login": {
+		"login": "Login",
+		"title": "Welcome to Umidjon Blog",
+		"subtitle": "Please login to continue reading and sharing content"
+	},
+	"common": {
+		"home": "Home",
+		"about": "About",
+		"blogs": "Blogs",
+		"archive": "Archive",
+		"contact": "Contact"
+	}
+}

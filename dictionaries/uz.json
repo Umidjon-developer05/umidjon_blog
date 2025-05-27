@@ -1,0 +1,22 @@
+{
+	"languages": {
+		"switchLanguage": "Tilni O'zgartirish",
+		"english": "Inglizcha",
+		"uzbek": "O'zbekcha"
+	},
+	"main": {
+		"title": "Siz qanday qilib o'z kuningizni nazorat qilishni bilsangiz, bu juda oson!"
+	},
+	"login": {
+		"login": "Kirish",
+		"title": "Umidjon Blogiga Xush Kelibsiz",
+		"subtitle": "Davom etish uchun iltimos, kirish qiling va kontentni o'qing va baham ko'ring"
+	},
+	"common": {
+		"home": "Bosh sahifa",
+		"about": "Biz haqimizda",
+		"blogs": "Bloglar",
+		"archive": "Arxiv",
+		"contact": "Aloqa"
+	}
+}
