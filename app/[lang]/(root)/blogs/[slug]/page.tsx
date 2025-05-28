@@ -13,10 +13,10 @@ export async function generateMetadata({
 	params: { slug: string; lang: string }
 }) {
 	const blog = await getDetailedBlog(params.slug, params?.lang)
-
+	console.log('blog', blog)
 	return {
 		title: blog?.title,
-		description: blog.description,
+		description: blog?.description,
 		keywords: blog.tag.name,
 		openGraph: {
 			images: blog.image.url,

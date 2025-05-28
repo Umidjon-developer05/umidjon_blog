@@ -55,6 +55,7 @@ export const getDetailedBlog = cache(
 					content {
 						html
 					}
+					description
 					createdAt
 					image {
 						url
