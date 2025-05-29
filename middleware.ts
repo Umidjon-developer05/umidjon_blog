@@ -6,15 +6,19 @@ const locales = ['en', 'uz']
 const defaultLocale = 'en'
 
 function getLocale(request: NextRequest): string {
-	// Check if locale is in the pathname
 	const pathname = request.nextUrl.pathname
+
+	// 1. Pathname'da locale borligini tekshirish
 	const pathnameLocale = locales.find(
 		locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
 	)
-
 	if (pathnameLocale) return pathnameLocale
 
-	// Check Accept-Language header
+	// 2. Cookie'da saqlangan locale'ni tekshirish
+	const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value
+	if (cookieLocale && locales.includes(cookieLocale)) return cookieLocale
+
+	// 3. Accept-Language header orqali aniqlash
 	const acceptLanguage = request.headers.get('accept-language')
 	if (acceptLanguage) {
 		const preferredLocale = locales.find(locale =>
@@ -23,6 +27,7 @@ function getLocale(request: NextRequest): string {
 		if (preferredLocale) return preferredLocale
 	}
 
+	// 4. Standart til
 	return defaultLocale
 }
 

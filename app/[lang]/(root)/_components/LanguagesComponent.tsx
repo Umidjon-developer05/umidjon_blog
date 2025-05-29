@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Globe } from 'lucide-react'
 import { LanguageSwitcherProps } from '@/types'
+import Cookies from 'js-cookie'
 
 function LanguageSwitcher({ currentLang, dictionary }: LanguageSwitcherProps) {
 	const router = useRouter()
@@ -19,6 +20,7 @@ function LanguageSwitcher({ currentLang, dictionary }: LanguageSwitcherProps) {
 		const segments = pathname.split('/')
 		segments[1] = newLang
 		const newPath = segments.join('/')
+		Cookies.set('NEXT_LOCALE', newLang, { path: '/' })
 		router.push(newPath)
 	}
 

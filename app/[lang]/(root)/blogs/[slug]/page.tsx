@@ -17,9 +17,9 @@ export async function generateMetadata({
 	return {
 		title: blog?.title,
 		description: blog?.description,
-		keywords: blog.tag.name,
+		keywords: blog?.tag?.name,
 		openGraph: {
-			images: blog.image.url,
+			images: blog?.image?.url,
 		},
 	}
 }
@@ -31,6 +31,13 @@ async function SlugPage({
 }) {
 	const blog = await getDetailedBlog(params.slug, params?.lang)
 
+	if (!blog) {
+		return (
+			<div className='max-w-5xl mx-auto pt-[15vh]'>
+				<h1 className='text-4xl font-creteRound'>Blog not found</h1>
+			</div>
+		)
+	}
 	return (
 		<div className='pt-[15vh] max-w-5xl mx-auto'>
 			<h1 className='lg:text-6xl md:text-5xl text-4xl font-creteRound'>
