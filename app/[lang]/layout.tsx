@@ -48,14 +48,14 @@ export async function generateStaticParams() {
 	return [{ lang: 'en' }, { lang: 'uz' }]
 }
 
-export default async function RootLayout({
+export default function RootLayout({
 	children,
 	params,
 }: {
 	children: React.ReactNode
-	params: Promise<{ lang: 'en' | 'uz' }>
+	params: { lang: 'en' | 'uz' }
 }) {
-	const { lang } = await params
+	const { lang } = params
 	return (
 		<html lang={lang} suppressHydrationWarning>
 			<body
