@@ -4,17 +4,17 @@ import { Dot, Home } from 'lucide-react'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
 
 export const metadata: Metadata = {
 	title: 'About us',
 }
 
-async function AboutPage() {
+async function AboutPage({ params }: { params: { lang: string } }) {
 	const authors = await getAuthors()
-
-	// Joriy tilni olish
-	const { locale } = useParams() as { locale: string }
+     const { lang } = params
+	if (lang !== 'en' && lang !== 'uz') {
+		throw new Error('Invalid language parameter')
+	}
 
 	return (
 		<div className='max-w-6xl mx-auto'>
@@ -26,7 +26,7 @@ async function AboutPage() {
 				<div className='flex gap-1 items-center mt-4'>
 					<Home className='w-4 h-4' />
 					<Link
-						href={`/${locale}`}
+						href={`/${lang}`}
 						className='opacity-90 hover:underline hover:opacity-100'
 					>
 						Home
@@ -42,7 +42,7 @@ async function AboutPage() {
 			<div className='grid grid-cols-4 gap-4 min-h-96 mt-6'>
 				<div className='col-span-2 max-md:col-span-4 relative h-80'>
 					<Image
-						src={`/${locale}/about/01.jpg`}
+						src={`/${lang}/about/01.jpg`}
 						alt='about'
 						fill
 						className='rounded-md object-cover'
@@ -50,7 +50,7 @@ async function AboutPage() {
 				</div>
 				<div className='h-80 self-end relative max-md:col-span-2 max-md:h-72'>
 					<Image
-						src={`/${locale}/about/00.jpg`}
+						src={`/${lang}/about/00.jpg`}
 						alt='about'
 						fill
 						className='rounded-md object-cover'
@@ -58,7 +58,7 @@ async function AboutPage() {
 				</div>
 				<div className='relative h-80 max-md:col-span-2 max-md:mb-8 max-md:h-72'>
 					<Image
-						src={`/${locale}/about/02.jpg`}
+						src={`/${lang}/about/02.jpg`}
 						alt='about'
 						fill
 						className='rounded-md object-cover'
