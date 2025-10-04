@@ -101,21 +101,6 @@ function CommentItem({
     }
   };
 
-  const confirmDelete = async () => {
-    setPending(true);
-    try {
-      if (onDelete) {
-        await onDelete(comment._id);
-      }
-      // Agar Server Actions ishlatsangiz:
-      // const fd = new FormData();
-      // fd.set("commentId", comment._id);
-      // await deleteCommentAction(null as any, fd);
-    } finally {
-      setPending(false);
-    }
-  };
-
   return (
     <Card>
       <CardHeader className="pb-3">

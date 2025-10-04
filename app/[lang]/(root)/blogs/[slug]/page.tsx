@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ShareBtns from "../../_components/share-btns";
 import FormComment from "@/components/comment/form-comment";
-import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 import GetCommentCard from "@/components/comment/get-comment-card";
