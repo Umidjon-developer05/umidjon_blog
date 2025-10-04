@@ -1,3 +1,4 @@
+// ./app/[lang]/(root)/blogs/[slug]/page.tsx
 import { getReadingTime } from "@/lib/utils";
 import { getDetailedBlog } from "@/service/blog.service";
 import { format } from "date-fns";
@@ -12,13 +13,47 @@ import { authOptions } from "@/lib/auth/auth";
 import GetCommentCard from "@/components/comment/get-comment-card";
 import { getCommentsByPostId, UserIdAuthorId } from "@/actions/commit.actions";
 
+type Author = {
+  id: string;
+  name: string;
+  image: { url: string };
+  bio?: string;
+};
+
+type Blog = {
+  slug: string;
+  title: string;
+  description?: string;
+  content: { html: string };
+  image: { url: string };
+  author: Author;
+  tag?: { name?: string };
+  createdAt: string | Date;
+};
+
+type RawComment = {
+  _id: string;
+  content: string;
+  author: Author;
+  createdAt: string | Date;
+};
+
+type NormalizedComment = {
+  _id: string;
+  content: string;
+  author: Author;
+  createdAt: string;
+};
+
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string; lang: string };
 }) {
-  const blog = await getDetailedBlog(params.slug, params?.lang);
-  console.log("blog", blog);
+  const blog = (await getDetailedBlog(
+    params.slug,
+    params?.lang
+  )) as Blog | null;
   return {
     title: blog?.title,
     description: blog?.description,
@@ -34,11 +69,15 @@ async function SlugPage({
 }: {
   params: { slug: string; lang: string };
 }) {
-  const blog = await getDetailedBlog(params.slug, params?.lang);
+  const blog = (await getDetailedBlog(
+    params.slug,
+    params?.lang
+  )) as Blog | null;
   const session = await getServerSession(authOptions);
-  const user = session?.user;
+  const userId = session?.user?.id; // ✅ no non-null assertion
+
+  const isCommit = await UserIdAuthorId(userId!, params.slug);
   const getCommentCard = await getCommentsByPostId(params.slug);
-  const isCommit = await UserIdAuthorId(user?.id!, params.slug);
 
   if (!blog) {
     return (
@@ -47,6 +86,25 @@ async function SlugPage({
       </div>
     );
   }
+
+  // normalize comments and ensure author includes 'email'
+  const comments = Array.isArray(getCommentCard)
+    ? getCommentCard.map((comment) => ({
+        _id: String(comment._id),
+        content: String(comment.content),
+        author: {
+          name: comment.author.name,
+          email: (comment.author as any).email ?? "",
+          image:
+            (comment.author.image?.url ?? comment.author.image) || undefined,
+        },
+        createdAt:
+          typeof comment.createdAt === "string"
+            ? comment.createdAt
+            : (comment.createdAt as Date).toISOString(),
+      }))
+    : [];
+
   return (
     <div className="pt-[15vh] max-w-5xl mx-auto">
       <h1 className="lg:text-6xl md:text-5xl text-4xl font-creteRound">
@@ -79,8 +137,8 @@ async function SlugPage({
       <Image
         src={blog.image.url}
         alt="alt"
-        width={`1120`}
-        height={`595`}
+        width={1120}
+        height={595}
         className="mt-4 rounded-md"
       />
 
@@ -95,19 +153,10 @@ async function SlugPage({
           {parse(blog.content.html)}
         </div>
       </div>
-      <GetCommentCard
-        comments={
-          Array.isArray(getCommentCard)
-            ? getCommentCard.map((comment: any) => ({
-                _id: comment._id,
-                content: comment.content,
-                author: comment.author,
-                createdAt: comment.createdAt,
-              }))
-            : []
-        }
-      />
-      {!user ? (
+
+      <GetCommentCard comments={comments} />
+
+      {!userId ? (
         <p className="text-center mt-10">
           Komment yozish uchun avval tizimga kiring
         </p>
@@ -120,7 +169,7 @@ async function SlugPage({
           ) : (
             <FormComment
               postId={blog.slug}
-              authorId={user?.id}
+              authorId={userId}
               slug={blog.slug}
             />
           )}
@@ -131,8 +180,8 @@ async function SlugPage({
         <Image
           src={blog.author.image.url}
           alt="author"
-          width="155"
-          height="155"
+          width={155}
+          height={155}
           className="rounded-md max-md:self-start"
         />
         <div className="flex-1 flex flex-col space-y-4">
