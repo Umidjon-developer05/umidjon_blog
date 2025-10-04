@@ -31,20 +31,6 @@ type Blog = {
   createdAt: string | Date;
 };
 
-type RawComment = {
-  _id: string;
-  content: string;
-  author: Author;
-  createdAt: string | Date;
-};
-
-type NormalizedComment = {
-  _id: string;
-  content: string;
-  author: Author;
-  createdAt: string;
-};
-
 export async function generateMetadata({
   params,
 }: {
@@ -108,7 +94,7 @@ async function SlugPage({
   return (
     <div className="pt-[15vh] max-w-5xl mx-auto">
       <h1 className="lg:text-6xl md:text-5xl text-4xl font-creteRound">
-        {blog.title}
+        {blog?.title}
       </h1>
 
       <div className="flex items-center flex-wrap max-md:justify-center gap-4 mt-4">
