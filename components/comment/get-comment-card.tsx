@@ -3,11 +3,8 @@
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
 
 type Author = {
   name: string;
@@ -24,8 +21,6 @@ type CommentT = {
 
 type Props = {
   comments: CommentT[]; // getCommentsByPostId dan kelgan ro'yxat
-  onEdit?: (id: string, content: string) => Promise<void> | void; // optional: agar actions o'rniga props ishlatsangiz
-  onDelete?: (id: string) => Promise<void> | void; // optional
 };
 
 const initials = (name?: string, email?: string) => {
@@ -41,7 +36,7 @@ const initials = (name?: string, email?: string) => {
 
 const fmt = (d?: string) => (d ? new Date(d).toLocaleString() : "");
 
-export default function GetCommentCard({ comments, onEdit, onDelete }: Props) {
+export default function GetCommentCard({ comments }: Props) {
   if (!comments?.length) {
     return (
       <Card className="mt-10">
@@ -62,7 +57,7 @@ export default function GetCommentCard({ comments, onEdit, onDelete }: Props) {
       <ul className="space-y-4">
         {comments.map((c) => (
           <li key={c._id}>
-            <CommentItem comment={c} onEdit={onEdit} onDelete={onDelete} />
+            <CommentItem comment={c} />
           </li>
         ))}
       </ul>
@@ -70,37 +65,7 @@ export default function GetCommentCard({ comments, onEdit, onDelete }: Props) {
   );
 }
 
-function CommentItem({
-  comment,
-  onEdit,
-  onDelete,
-}: {
-  comment: CommentT;
-  onEdit?: (id: string, content: string) => Promise<void> | void;
-  onDelete?: (id: string) => Promise<void> | void;
-}) {
-  const [editing, setEditing] = React.useState(false);
-  const [val, setVal] = React.useState(comment.content);
-  const [pending, setPending] = React.useState(false);
-
-  const submitEdit = async () => {
-    if (!val.trim()) return;
-    try {
-      setPending(true);
-      if (onEdit) {
-        await onEdit(comment._id, val);
-      }
-      // Agar Server Actions ishlatsangiz:
-      // const fd = new FormData();
-      // fd.set("commentId", comment._id);
-      // fd.set("content", val);
-      // await updateCommentAction(null as any, fd);
-      setEditing(false);
-    } finally {
-      setPending(false);
-    }
-  };
-
+function CommentItem({ comment }: { comment: CommentT }) {
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -131,35 +96,6 @@ function CommentItem({
           </div>
         </div>
       </CardHeader>
-
-      <CardContent className="pt-0">
-        {editing ? (
-          <div className="space-y-3">
-            <Textarea
-              value={val}
-              onChange={(e) => setVal(e.target.value)}
-              className="min-h-[110px]"
-            />
-            <div className="flex items-center gap-2">
-              <Button size="sm" onClick={submitEdit} disabled={pending}>
-                <Check className="h-4 w-4 mr-1" /> Saqlash
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => {
-                  setEditing(false);
-                  setVal(comment.content);
-                }}
-              >
-                <X className="h-4 w-4 mr-1" /> Bekor qilish
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <p className="leading-7">{comment.content}</p>
-        )}
-      </CardContent>
     </Card>
   );
 }

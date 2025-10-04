@@ -3,7 +3,6 @@
 import { z } from "zod";
 import Comment from "@/models/Comment";
 import "@/lib/db"; // ensures a single, cached mongoose connect
-import { ok } from "assert";
 
 const CreateSchema = z.object({
   content: z.string().min(1, "Matn kerak").max(5_000),
@@ -47,7 +46,7 @@ export async function getCommentsByPostId(postId: string) {
 export async function UserIdAuthorId(authorId: string, slug: string) {
   try {
     const comments = await Comment.find({ author: authorId, postId: slug });
-    
+
     return { ok: true, comments };
   } catch (e: any) {
     return { ok: false, error: e.message || "Xatolik" };

@@ -37,10 +37,9 @@ async function SlugPage({
   const blog = await getDetailedBlog(params.slug, params?.lang);
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  console.log("user", user);
   const getCommentCard = await getCommentsByPostId(params.slug);
   const isCommit = await UserIdAuthorId(user?.id!, params.slug);
-  console.log("isCommit", isCommit);
+
   if (!blog) {
     return (
       <div className="max-w-5xl mx-auto pt-[15vh]">
