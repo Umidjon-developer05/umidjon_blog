@@ -80,7 +80,7 @@ async function SlugPage({
         content: String(comment.content),
         author: {
           name: comment.author.name,
-          email: (comment.author as any).email ?? "",
+          email: (comment?.author).email ?? "",
           image:
             (comment.author.image?.url ?? comment.author.image) || undefined,
         },
