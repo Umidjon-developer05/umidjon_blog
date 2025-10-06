@@ -58,13 +58,15 @@ export default function RootLayout({
   const { lang } = params;
   return (
     <html lang={lang} suppressHydrationWarning>
-      <body
-        className={`${creteRound.variable} ${workSans.variable} overflow-x-hidden`}
-      >
+      <head>
         <meta
           name="google-site-verification"
           content="QJHI40SHSYR4K_u93M9xB9qYz3o54dFHsZ0RWyf41MY"
         />
+      </head>
+      <body
+        className={`${creteRound.variable} ${workSans.variable} overflow-x-hidden`}
+      >
         <AuthProvider>
           <ThemeProvider
             attribute="class"
