@@ -81,12 +81,14 @@ function CommentItem({ comment }: { comment: CommentT }) {
               </AvatarFallback>
             </Avatar>
             <div className="leading-tight">
-              <CardTitle className="text-base">
+              <CardTitle className="text-base ">{comment.content}</CardTitle>
+              <p className="text-xs text-muted-foreground">
                 {comment.author?.name || "No name"}
-              </CardTitle>
+              </p>
               <p className="text-xs text-muted-foreground">
                 {comment.author?.email}
               </p>
+
               {comment.createdAt && (
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {fmt(comment.createdAt)}
